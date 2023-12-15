@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
-import React, { FormEvent, useState } from "react";
-import InputGroup from "@/components/InputGroup";
 import Link from "next/link";
+import React, { FormEvent, useState } from "react";
 import axios from "axios";
+import InputGroup from "@/src/components/InputGroup";
+import { useAuthDispatch } from "@/src/context/auth";
 
 const Login = () => {
   const router = useRouter();
@@ -11,14 +12,19 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<any>({});
 
+  const dispatch = useAuthDispatch();
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      await axios.post(
+      const res = await axios.post(
         "/auth/login",
         { password, username },
         { withCredentials: true }
       );
+
+      dispatch("LOGIN", res.data?.user);
+      router.push("/");
     } catch (error: any) {
       console.log(error);
       setErrors(error.response.data || {});

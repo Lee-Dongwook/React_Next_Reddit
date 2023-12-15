@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
-import InputGroup from "@/components/InputGroup";
+import InputGroup from "@/src/components/InputGroup";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
