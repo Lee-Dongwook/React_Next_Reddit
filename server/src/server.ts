@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { AppDataSource } from './data-source';
 import authRoutes from './routes/auth';
 import subRoutes from './routes/subs';
@@ -15,7 +16,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(morgan("dev"));
-
+app.use(cookieParser());
 dotenv.config();
 
 app.get("/", (_, res) => res.send("running"));
