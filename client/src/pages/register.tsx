@@ -3,14 +3,17 @@ import React, { FormEvent, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import InputGroup from "@/src/components/InputGroup";
+import { useAuthState } from "../context/auth";
 
 const Register = () => {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<any>({});
+  const { authenticated } = useAuthState();
 
   let router = useRouter();
+  if (authenticated) router.push("/");
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
