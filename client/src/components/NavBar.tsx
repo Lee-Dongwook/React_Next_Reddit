@@ -1,9 +1,23 @@
 import Link from "next/link";
 import React from "react";
-import { useAuthState } from "@/src/context/auth";
+import axios from "axios";
+import { useAuthState, useAuthDispatch } from "@/src/context/auth";
 
 const NavBar: React.FC = () => {
   const { loading, authenticated } = useAuthState();
+  const dispatch = useAuthDispatch();
+
+  const handleLogOut = () => {
+    axios
+      .post("/auth/logout")
+      .then(() => {
+        dispatch("LOGOUT");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-16 px-5 bg-white">
@@ -23,8 +37,11 @@ const NavBar: React.FC = () => {
       <div className="flex">
         {!loading &&
           (authenticated ? (
-            <button className="w-20 p-2 mr-2 text-center text-white">
-              로그인
+            <button
+              className="w-20 p-2 mr-2 text-center text-white"
+              onClick={handleLogOut}
+            >
+              로그아웃
             </button>
           ) : (
             <>
