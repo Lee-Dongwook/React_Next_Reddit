@@ -4,6 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { AppDataSource } from './data-source';
 import authRoutes from './routes/auth';
+import subRoutes from './routes/subs';
 
 const app = express();
 const origin = "http://localhost:3000";
@@ -19,6 +20,7 @@ dotenv.config();
 
 app.get("/", (_, res) => res.send("running"));
 app.use("/api/auth", authRoutes)
+app.use("/api/subs", subRoutes)
 
 let port = 4000;
 
