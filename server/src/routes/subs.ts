@@ -1,5 +1,4 @@
 import { Router, type Request, type Response } from "express";
-import jwt from 'jsonwebtoken';
 import { isEmpty } from "class-validator";
 import { AppDataSource } from "../data-source";
 import User from "../entities/User";
@@ -7,6 +6,17 @@ import Sub from "../entities/Sub";
 import Post from "../entities/Post";
 import authMiddleware from '../middlewares/auth';
 import userMiddleware from '../middlewares/user';
+
+const getSub = async(req: Request, res: Response ) => {
+  const name = req.params.name;
+
+  try {
+    const sub = await Sub.findOneByOrFail({name});
+    return res.json(sub);
+  } catch(error:any) {
+    return res.status(404).json({error: "서브를 찾을 수 없습니다."});
+  }
+}
 
 const createSub = async(req: Request, res: Response) => {
     const { name, title, description } = req.body;
@@ -69,6 +79,8 @@ const topSubs = async(req: Request, res:Response) => {
 }
 
 const router = Router();
+
+router.get("/:name", userMiddleware, getSub);
 router.post("/", userMiddleware, authMiddleware, createSub);
 router.get("/subs/topSubs", topSubs);
 export default router;
