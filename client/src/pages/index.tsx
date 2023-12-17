@@ -2,10 +2,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
-import useSWR from "swr";
 import axios from "axios";
+import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import styles from "@/src/styles/Home.module.css";
-import { Sub } from "@/src/types";
+import { Post, Sub } from "@/src/types";
 import { useAuthState } from "@/src/context/auth";
 
 const Home: NextPage = () => {
@@ -16,6 +17,21 @@ const Home: NextPage = () => {
   };
 
   const address = "http://localhost:4000/api/subs/sub/topsSubs";
+
+  const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    if (previousPageData && !previousPageData.length) return null;
+    return `/posts?page=${pageIndex}`;
+  };
+
+  const {
+    data,
+    error,
+    size: page,
+    setSize: setPage,
+    isValidating,
+    mutate,
+  } = useSWRInfinite<Post[]>(getKey);
+
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
   console.log("topSubs", topSubs);
 
