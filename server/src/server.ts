@@ -7,6 +7,7 @@ import { AppDataSource } from './data-source';
 import authRoutes from './routes/auth';
 import subRoutes from './routes/subs';
 import postRoutes from './routes/posts';
+import voteRoutes from './routes/votes';
 
 const app = express();
 const origin = "http://localhost:3000";
@@ -24,6 +25,7 @@ app.get("/", (_, res) => res.send("running"));
 app.use("/api/auth", authRoutes)
 app.use("/api/subs", subRoutes)
 app.use("/api/posts", postRoutes)
+app.use("/api/votes", voteRoutes)
 app.use(express.static("public"))
 
 let port = 4000;
