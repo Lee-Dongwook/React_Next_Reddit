@@ -64,7 +64,7 @@ const SubPage = () => {
       );
     } else {
       renderPosts = sub.post.map((post: Post) => (
-        <PostCard key={post.identifier} post={post} mutate={subMutate} />
+        <PostCard key={post.identifier} post={post} subMutate={mutate} />
       ));
     }
   };

@@ -1,13 +1,14 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import Head from "next/head";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 import styles from "@/src/styles/Home.module.css";
-import { Post, Sub } from "@/src/types";
+import PostCard from "@/src/components/PostCard";
 import { useAuthState } from "@/src/context/auth";
+import type { Post, Sub } from "@/src/types";
 
 const Home: NextPage = () => {
   const { authenticated } = useAuthState();
@@ -32,13 +33,48 @@ const Home: NextPage = () => {
     mutate,
   } = useSWRInfinite<Post[]>(getKey);
 
+  const isInitialLoading = !data && !error;
+  const posts: Post[] = data ? ([] as Post[]).concat(...data) : [];
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
-  console.log("topSubs", topSubs);
+
+  const [observedPost, setObservedPost] = useState<string>("");
+
+  const observeElement = (element: HTMLElement | null) => {
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting === true) {
+          console.log("마지막 포스트 위치에 있습니다.");
+          setPage(page + 1);
+          observer.unobserve(element);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    observer.observe(element);
+  };
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) return;
+
+    const id = posts[posts.length - 1].identifier;
+
+    if (id !== observedPost) {
+      setObservedPost(id);
+      observeElement(document.getElementById(id));
+    }
+  }, [posts]);
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트 리스트 */}
-      <div className="w-full md:mr-3 md:w-8/12"></div>
+      <div className="w-full md:mr-3 md:w-8/12">
+        {posts?.map((post) => (
+          <PostCard key={post.identifier} post={post} mutate={mutate} />
+        ))}
+      </div>
       {/* 사이드바 */}
       <div className="hidden w-4/12 ml-3 md:block">
         <div className="bg-white border rounded">
