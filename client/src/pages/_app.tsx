@@ -24,18 +24,20 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   };
   return (
-    <SWRConfig
-      value={{
-        fetcher,
-      }}
-    >
-      <AuthProvider>
-        {!authRoute && <NavBar />}
-        <div className={authRoute ? "" : "pt-12"}>
-          <Component {...pageProps} />
-        </div>
-      </AuthProvider>
-    </SWRConfig>
+    <>
+      <SWRConfig
+        value={{
+          fetcher,
+        }}
+      >
+        <AuthProvider>
+          {!authRoute && <NavBar />}
+          <div className={authRoute ? "" : "pt-12"}>
+            <Component {...pageProps} />
+          </div>
+        </AuthProvider>
+      </SWRConfig>
+    </>
   );
 }
 
