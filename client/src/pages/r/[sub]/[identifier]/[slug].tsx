@@ -188,7 +188,7 @@ const PostPage = () => {
                             <FaArrowUp />
                           )}
                         </div>
-                        <p className="text-xs font-bold">{post.voteScore}</p>
+                        <p className="text-xs font-bold">{comment.voteScore}</p>
                         {/* 싫어요 */}
                         <div
                           className="flex justify-center w-6 mx-auto text-gray-400 rounded cursor-pointer hover:bg-gray-300 hover:text-blue-500"

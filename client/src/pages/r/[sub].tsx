@@ -2,9 +2,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import axios from "axios";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { useAuthState } from "@/src/context/auth";
 import SideBar from "@/src/components/SideBar";
+import PostCard from "@/src/components/PostCard";
+import type { Post } from "@/src/types";
 
 const SubPage = () => {
   const [ownSub, setOwnSub] = useState<boolean>(false);
@@ -13,7 +15,11 @@ const SubPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
-  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
+  const {
+    data: sub,
+    error,
+    mutate: subMutate,
+  } = useSWR(subName ? `/subs/${subName}` : null);
   console.log("sub", sub);
 
   useEffect(() => {
@@ -47,6 +53,19 @@ const SubPage = () => {
     if (fileInput) {
       fileInput.name = type;
       fileInput.click();
+    }
+
+    let renderPosts;
+    if (!sub) {
+      renderPosts = <p className="text-lg text-center">로딩중...</p>;
+    } else if (sub.post.length === 0) {
+      renderPosts = (
+        <p className="text-lg text-center">작성된 포스트가 아직 없습니다.</p>
+      );
+    } else {
+      renderPosts = sub.post.map((post: Post) => (
+        <PostCard key={post.identifier} post={post} mutate={subMutate} />
+      ));
     }
   };
 
