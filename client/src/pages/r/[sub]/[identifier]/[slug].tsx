@@ -4,7 +4,7 @@ import React, { FormEvent, useState } from "react";
 import useSWR from "swr";
 import axios from "axios";
 import dayjs from "dayjs";
-import { Post } from "@/src/types";
+import type { Post, Comment } from "@/src/types";
 import { useAuthState } from "@/src/context/auth";
 
 const PostPage = () => {
@@ -15,6 +15,11 @@ const PostPage = () => {
   const { data: post, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
+
+  const { data: comments } = useSWR<Comment[]>(
+    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+  );
+  console.log("comment", comments);
 
   const [newComment, setNewComment] = useState<string>("");
 
