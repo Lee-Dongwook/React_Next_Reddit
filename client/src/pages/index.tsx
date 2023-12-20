@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
-import styles from "@/src/styles/Home.module.css";
 import PostCard from "@/src/components/PostCard";
 import { useAuthState } from "@/src/context/auth";
 import type { Post, Sub } from "@/src/types";

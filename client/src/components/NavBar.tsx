@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
         {!loading &&
           (authenticated ? (
             <button
-              className="w-20 p-2 mr-2 text-center text-white"
+              className="w-20 p-2 mr-2 text-center text-blue-500 border border-blue-500 rounded"
               onClick={handleLogOut}
             >
               로그아웃
