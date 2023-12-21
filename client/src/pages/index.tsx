@@ -56,6 +56,7 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
+    console.log(posts);
     if (!posts || posts.length === 0) return;
 
     const id = posts[posts.length - 1].identifier;
@@ -69,11 +70,11 @@ const Home: NextPage = () => {
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트 리스트 */}
-      {/* <div className="w-full md:mr-3 md:w-8/12">
+      <div className="w-full md:mr-3 md:w-8/12">
         {posts?.map((post) => (
           <PostCard key={post.identifier} post={post} mutate={mutate} />
         ))}
-      </div> */}
+      </div>
       {/* 사이드바 */}
       <div className="hidden w-4/12 ml-3 md:block">
         <div className="bg-white border rounded">

@@ -25,7 +25,6 @@ const PostCard = ({
     voteScore,
     userVote,
     commentCount,
-    url,
     username,
     sub,
   },
@@ -111,19 +110,19 @@ const PostCard = ({
           <Link href={`/r/${username}`} legacyBehavior>
             <a className="mx-1 hover:underline">/u/{username}</a>
           </Link>
-          <Link href={url} legacyBehavior>
+          <Link href={`/r/${username}`} legacyBehavior>
             <a className="mx-1 hover:underline">
               {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
             </a>
           </Link>
         </p>
 
-        <Link href={url}>
+        <Link href={`/r/${subName}`} legacyBehavior>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
         {body && <p className="my-1 text-sm">{body}</p>}
         <div className="flex">
-          <Link href={url}>
+          <Link href={`/r/${subName}`} legacyBehavior>
             <a>
               <i className="mr-1 fas fa-comment-alt fa-xs"></i>
               <span className="font-bold">{commentCount} Comments</span>
