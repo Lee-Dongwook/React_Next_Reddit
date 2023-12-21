@@ -5,12 +5,14 @@ import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { AppDataSource } from './data-source';
+
 import authRoutes from './routes/auth';
 import subRoutes from './routes/subs';
 import postRoutes from './routes/posts';
 import voteRoutes from './routes/votes';
 import userRoutes from './routes/users';
+
+import { userInitializer } from './dbInitializer';
 
 const app = express();
 const origin = "http://localhost:3000";
@@ -38,7 +40,9 @@ let port = 4000;
 app.listen(port, async() => {
     console.log(`Server running at http://localhost:${port}`);
 
-    AppDataSource.initialize().then(() => {
-        console.log("database initialized")
-    }).catch(error => console.log(error))
+    try {
+        await userInitializer();
+    } catch(error){
+        console.error(error);
+    }
 })
