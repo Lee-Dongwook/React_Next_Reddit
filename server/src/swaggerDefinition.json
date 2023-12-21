@@ -1,0 +1,41 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Reddit Clone API DOCS",
+    "description": "Reddit 클론코딩 API 정리 문서입니다.",
+    "version": "1.0.0",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "dlehddnr0713@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:4000",
+  "tags": [
+    {
+      "name": "/api/auth",
+      "description": "회원 인증 관련 API 목록입니다."
+    },
+    {
+      "name": "/api/posts",
+      "description": ""
+    },
+    {
+      "name": "/api/subs",
+      "description": ""
+    },
+    {
+      "name": "/api/users",
+      "description": "유저 정보 관련 API 목록입니다."
+    },
+    {
+      "name": "/api/votes",
+      "description:": ""
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {}
+}
