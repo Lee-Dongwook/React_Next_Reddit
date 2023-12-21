@@ -1,6 +1,7 @@
 import { AppDataSource } from './data-source';
 import User from './entities/User';
 import Sub from './entities/Sub';
+import Post from './entities/Post';
 
 export const userInitializer = async() => {
     try {
@@ -33,7 +34,7 @@ export const subInitializer = async() => {
       const existingUser = await userRepository.findOneBy({email: "test@test.com"});
       
       if(existingUser) {
-        const existingSub = await subRepository.findOneBy({});
+        const existingSub = await subRepository.findOneBy({name: "testBoard"});
 
         if(!existingSub) {
             const testUserSub = new Sub();
@@ -56,4 +57,37 @@ export const subInitializer = async() => {
     } catch(error) {
         console.error('문제가 발생하였습니다.', error);
     }
+}
+
+export const postInitializer = async() => {
+  try {
+    const subRepository = AppDataSource.getRepository(Sub);
+    const postRepository = AppDataSource.getRepository(Post);
+  
+    const existingSub = await subRepository.findOneBy({name: "testBoard"})
+
+    if(existingSub){
+      const existingPost = await postRepository.findOneBy({subName: "testBoard", identifier: "1"});
+      if(!existingPost) {
+        const testUserPost = new Post();
+        testUserPost.identifier = '1';
+        testUserPost.title = '테스트 게시글';
+        testUserPost.slug = 'test-post';
+        testUserPost.body = '테스트 게시글입니다.';
+        testUserPost.subName = existingSub.name;
+        testUserPost.username = existingSub.username;
+        testUserPost.user = existingSub.user;
+        testUserPost.sub = existingSub;
+
+        await postRepository.save(testUserPost);
+        console.log('테스트 유저의 테스트 게시물이 생성되었습니다.');
+      } else {
+        console.log('테스트 게시물이 이미 존재합니다. 다음 프로세스를 진행합니다.');
+      }
+    } else {
+      console.log('테스트 게시판이 생성되지 않았습니다. 서버를 재 실행해주세요.');
+    }
+  } catch(error) {
+    console.error('문제가 발생하였습니다.', error);
+  }
 }
