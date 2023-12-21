@@ -22,7 +22,7 @@ export default class Post extends BaseEntity {
 
     @Column({nullable: true, type: "text"})
     body: string;
-
+    
     @Column()
     subName: string;
 
