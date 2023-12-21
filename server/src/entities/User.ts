@@ -2,6 +2,7 @@ import { IsEmail, Length } from 'class-validator';
 import { Entity, Column, Index, OneToMany, BeforeInsert } from "typeorm";
 import bcrypt from 'bcryptjs';
 import BaseEntity from './Entity';
+import Sub from './Sub';
 import Post from './Post';
 import Vote from './Vote';
 
@@ -22,6 +23,9 @@ export default class User extends BaseEntity {
     @Column()
     @Length(6, 255, {message: "비밀번호는 6자 이상이어야 합니다."})
     password: string
+
+    @OneToMany(() => Sub, (sub) => sub.user)
+    subs: Sub[]
 
     @OneToMany(() => Post, (post) => post.user)
     posts: Post[]

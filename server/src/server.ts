@@ -12,7 +12,7 @@ import postRoutes from './routes/posts';
 import voteRoutes from './routes/votes';
 import userRoutes from './routes/users';
 
-import { userInitializer } from './dbInitializer';
+import { userInitializer, subInitializer } from './dbInitializer';
 
 const app = express();
 const origin = "http://localhost:3000";
@@ -42,6 +42,7 @@ app.listen(port, async() => {
 
     try {
         await userInitializer();
+        await subInitializer();
     } catch(error){
         console.error(error);
     }
