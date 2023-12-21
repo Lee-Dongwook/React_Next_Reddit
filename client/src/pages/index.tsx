@@ -55,25 +55,25 @@ const Home: NextPage = () => {
     observer.observe(element);
   };
 
-  useEffect(() => {
-    if (!posts || posts.length === 0) return;
+  // useEffect(() => {
+  //   if (!posts || posts.length === 0) return;
 
-    const id = posts[posts.length - 1].identifier;
+  //   const id = posts[posts.length - 1].identifier;
 
-    if (id !== observedPost) {
-      setObservedPost(id);
-      observeElement(document.getElementById(id));
-    }
-  }, [posts]);
+  //   if (id !== observedPost) {
+  //     setObservedPost(id);
+  //     observeElement(document.getElementById(id));
+  //   }
+  // }, [posts]);
 
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트 리스트 */}
-      <div className="w-full md:mr-3 md:w-8/12">
+      {/* <div className="w-full md:mr-3 md:w-8/12">
         {posts?.map((post) => (
           <PostCard key={post.identifier} post={post} mutate={mutate} />
         ))}
-      </div>
+      </div> */}
       {/* 사이드바 */}
       <div className="hidden w-4/12 ml-3 md:block">
         <div className="bg-white border rounded">
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
           </div>
 
           {/* 커뮤니티 리스트 */}
-          <div>
+          {/* <div>
             {topSubs?.map((sub) => (
               <div
                 key={sub.name}
@@ -107,7 +107,7 @@ const Home: NextPage = () => {
                 <p className="ml-auto font-md">{sub.postCount}</p>
               </div>
             ))}
-          </div>
+          </div> */}
           {authenticated && (
             <div className="w-full py-6 text-center">
               <Link href="/subs/create" legacyBehavior>
