@@ -48,11 +48,7 @@ const createSub = async(req: Request, res: Response) => {
       .where("lower(sub.name) = :name", {name: name.toLowerCase()})
       .getOne();
 
-      if(sub) errors.name = "서브가 이미 존재합니다.";
-
-      if(Object.keys(errors).length > 0) {
-        throw errors;
-      }
+      if(sub) {return res.status(400).json({error: "해당 커뮤니티가 이미 존재합니다."})}
 
     } catch(error) {
         console.log(error);

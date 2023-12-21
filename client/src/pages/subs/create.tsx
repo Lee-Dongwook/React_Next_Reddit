@@ -32,10 +32,11 @@ const SubCreate = () => {
 
     try {
       const res = await axios.post("/subs", { name, title, description });
-
+      alert("커뮤니티가 생성되었습니다.");
       router.push(`/r/${res.data.name}`);
     } catch (error: any) {
       console.log(error);
+      alert("커뮤니티 생성에 실패하였습니다. 다시 커뮤니티를 만들어주세요.");
       setErrors(error.response.data);
     }
   };
@@ -86,7 +87,10 @@ const SubCreate = () => {
           </div>
 
           <div className="flex justify-end">
-            <button className="px-4 py-1 text-sm font-semibold rounded text-white bg-gray-400 border">
+            <button
+              className="px-4 py-1 text-sm font-semibold rounded text-white bg-gray-400 border"
+              onClick={handleSubmit}
+            >
               커뮤니티 만들기
             </button>
           </div>
