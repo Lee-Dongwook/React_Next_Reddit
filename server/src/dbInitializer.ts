@@ -100,7 +100,7 @@ export const commentInitializer = async() => {
   
     const existingPost = await postRepository.findOneBy({subName: "testBoard"});
     if(existingPost) {
-      const existingComment = await commentRepository.findOneBy({identifier: existingPost.identifier});
+      const existingComment = await commentRepository.findOneBy({postId: existingPost.id, body: "테스트 댓글"});
 
       if(!existingComment) {
         const testUserComment = new Comment();
@@ -138,6 +138,8 @@ export const voteInitializer = async() => {
         const testUserVote = new Vote();
         testUserVote.value = 1;
         testUserVote.username = existingComment.username;
+        testUserVote.postId = existingPost.id;
+        testUserVote.commentId = existingComment.id;
 
         await voteRepository.save(testUserVote);
         console.log('테스트 유저의 테스트 투표가 생성되었습니다');
