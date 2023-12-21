@@ -37,5 +37,37 @@
     }
   ],
   "schemes": ["https", "http"],
-  "paths": {}
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["/api/auth"],
+        "summary": "회원가입 API",
+        "operationId": "signup",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/entities/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공",
+            "schema": {
+              "$ref": "#/entities/User"
+            }
+          },
+          "400": {
+            "description": "회원가입 실패",
+            "schema": {
+              "$ref": "#/entities/Error"
+            }
+          }
+        }
+      }
+    }
+  }
 }
