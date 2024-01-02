@@ -36,7 +36,7 @@ const getPost = async(req: Request, res:Response) => {
             where: {
                 identifier, slug
             },
-            relations: ["subs", "votes"]
+            relations: ["sub", "votes"]
         });
 
         if(res.locals.user) {

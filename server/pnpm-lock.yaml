@@ -47,6 +47,9 @@ dependencies:
   reflect-metadata:
     specifier: ^0.1.13
     version: 0.1.14
+  slug:
+    specifier: ^8.2.3
+    version: 8.2.3
   swagger-cli:
     specifier: ^4.0.4
     version: 4.0.4(openapi-types@12.1.3)
@@ -1685,6 +1688,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       semver: 7.5.4
+    dev: false
+
+  /slug@8.2.3:
+    resolution: {integrity: sha512-fXjhAZszNecz855GUNIwW0+sFPi9WV4bMiEKDOCA4wcq1ts1UnUVNy/F78B0Aat7/W3rA+se//33ILKNMrbeYQ==}
+    hasBin: true
     dev: false
 
   /split2@4.2.0:
