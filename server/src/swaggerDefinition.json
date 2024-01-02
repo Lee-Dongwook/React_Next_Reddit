@@ -16,57 +16,309 @@
   "host": "localhost:4000",
   "tags": [
     {
-      "name": "/api/auth",
+      "name": "auth",
       "description": "회원 인증 관련 API 목록입니다."
     },
     {
-      "name": "/api/posts",
-      "description": ""
+      "name": "posts",
+      "description": "게시글 관련 API 목록입니다."
     },
     {
-      "name": "/api/subs",
-      "description": ""
+      "name": "subs",
+      "description": "커뮤니티 관련 API 목록입니다."
     },
     {
-      "name": "/api/users",
+      "name": "users",
       "description": "유저 정보 관련 API 목록입니다."
     },
     {
-      "name": "/api/votes",
-      "description:": ""
+      "name": "comments",
+      "description": "댓글 관련 API 목록입니다."
+    },
+    {
+      "name": "votes",
+      "description:": "투표 관련 API 목록입니다."
     }
   ],
-  "schemes": ["https", "http"],
+  "schemes": ["http"],
   "paths": {
-    "/api/auth/register": {
-      "post": {
-        "tags": ["/api/auth"],
+    "/api/auth/me": {
+      "get": {
+        "tags": ["auth"],
         "summary": "회원가입 API",
-        "operationId": "signup",
         "parameters": [
           {
             "name": "body",
             "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "회원가입 성공"
+          },
+          "400": {
+            "description": "회원가입 실패"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "회원가입 API",
+        "parameters": [
+          {
+            "name": "body",
+            "description": "회원 정보",
+            "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/entities/User"
+              "type": "object",
+              "properties": {
+                "email" : {
+                  "type": "string"
+                },
+                "username" : {
+                  "type": "string",
+                  "minLength": 4,
+                  "maxLength": 20
+                },
+                "password": {
+                  "type": "string",
+                  "minLength": 6
+                }
+              }
+            },
+            "example": {
+              "email": "user@example.com",
+              "username": "exampleUser",
+              "password": "examplePassword"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "회원가입 성공",
-            "schema": {
-              "$ref": "#/entities/User"
-            }
+            "description": "회원가입 성공"
           },
           "400": {
-            "description": "회원가입 실패",
-            "schema": {
-              "$ref": "#/entities/Error"
-            }
+            "description": "회원가입 실패"
           }
         }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "로그인 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그인 성공"
+          },
+          "400": {
+            "description": "로그인 실패"
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "로그아웃 API",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "로그인 성공"
+          },
+          "400": {
+            "description": "로그인 실패"
+          }
+        }
+      }
+    },
+    "/api/posts": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "게시글 조회 API",
+        "operationId": "getPosts",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": ["posts"],
+        "summary": "게시글 생성 API",
+        "operationId": "createPost",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "게시글 생성 성공"
+          },
+          "400": {
+            "description": "게시글 생성 실패"
+          }
+        }
+      }
+    },
+    "/api/posts/{identifier}/{slug}": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "특정 게시글 조회 API",
+        "operationId": "getPost",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/posts/{identifier}/{slug}/comments" : {
+      "get": {
+        "tags": ["comments"]
+      },
+      "post": {
+        "tags": ["comments"]
+      }
+    },
+    "/api/subs": {
+      "post": {
+        "tags": ["subs"],
+        "summary": "코멘트 조회 API",
+        "operationId": "getComments",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/api/subs/{name}": {
+      "get": {
+        "tags": ["subs"],
+        "summary": "특정 코멘트 조회 API",
+        "operationId": "getComments",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/subs/topSubs": {
+      "get" : {
+        "tags" : ["subs"]
+      }
+    },
+    "/api/subs/{name}/upload" : {
+      "post": {
+        "tags": ["subs"]
+      }
+    },
+    "/api/users/{username}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "특정 유저 조회 API",
+        "operationId": "getUser",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/votes": {
+      "post": {
+        "tags": ["votes"],
+        "summary": "좋아요 조회 API",
+        "operationId": "getVotes",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
       }
     }
   }
