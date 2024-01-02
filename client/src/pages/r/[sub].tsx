@@ -63,12 +63,12 @@ const SubPage = () => {
     let renderPosts;
     if (!sub) {
       renderPosts = <p className="text-lg text-center">로딩중...</p>;
-    } else if (sub.post.length === 0) {
+    } else if (sub.posts.length === 0) {
       renderPosts = (
         <p className="text-lg text-center">작성된 포스트가 아직 없습니다.</p>
       );
     } else {
-      renderPosts = sub.post.map((post: Post) => (
+      renderPosts = sub.posts.map((post: Post) => (
         <PostCard key={post.identifier} post={post} subMutate={mutate} />
       ));
     }
