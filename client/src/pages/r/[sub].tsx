@@ -15,11 +15,16 @@ const SubPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
+
+  const fetcher = async (url: string) => {
+    return await axios.get(url).then((res) => res.data);
+  };
+
   const {
     data: sub,
     error,
     mutate: subMutate,
-  } = useSWR(subName ? `/subs/${subName}` : null);
+  } = useSWR(subName ? `/subs/${subName}` : null, fetcher);
   console.log("sub", sub);
 
   useEffect(() => {

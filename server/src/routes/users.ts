@@ -29,8 +29,8 @@ const getUserData = async (req: Request, res: Response) => {
 
         let userData: any[] = [];
 
-        posts.forEach((post) => userData.push({type: "Post", ...post.toJson()}));
-        comments.forEach((comment) => userData.push({type: "Comment", ...comment.toJson()}));
+        posts.forEach((post) => userData.push({type: "Post", ...post.toJSON()}));
+        comments.forEach((comment) => userData.push({type: "Comment", ...comment.toJSON()}));
 
         userData.sort((a,b) => {
             if(b.createdAt > a.createdAt) return 1;
