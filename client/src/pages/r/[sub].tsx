@@ -16,6 +16,8 @@ const SubPage = () => {
   const router = useRouter();
   const subName = router.query.sub;
 
+  let renderPosts;
+
   const fetcher = async (url: string) => {
     return await axios.get(url).then((res) => res.data);
   };
@@ -54,23 +56,11 @@ const SubPage = () => {
   };
 
   const openFileInput = (type: string) => {
+    if (!ownSub) return;
     const fileInput = fileInputRef.current;
     if (fileInput) {
       fileInput.name = type;
       fileInput.click();
-    }
-
-    let renderPosts;
-    if (!sub) {
-      renderPosts = <p className="text-lg text-center">로딩중...</p>;
-    } else if (sub.posts.length === 0) {
-      renderPosts = (
-        <p className="text-lg text-center">작성된 포스트가 아직 없습니다.</p>
-      );
-    } else {
-      renderPosts = sub.posts.map((post: Post) => (
-        <PostCard key={post.identifier} post={post} subMutate={mutate} />
-      ));
     }
   };
 
@@ -133,6 +123,21 @@ const SubPage = () => {
           </div>
           {/* 포스트와 사이드바 */}
           <div className="flex max-w-5xl px-4 pt-5 mx-auto">
+            <div>
+              {sub.posts.length === 0 ? (
+                <p className="text-lg text-center">
+                  작성된 포스트가 아직 없습니다.
+                </p>
+              ) : (
+                sub.posts.map((post: Post) => (
+                  <PostCard
+                    key={post.identifier}
+                    post={post}
+                    subMutate={subMutate}
+                  />
+                ))
+              )}
+            </div>
             <div className="w-full md:mr-3 md:w-8/12">
               <SideBar sub={sub} />
             </div>
