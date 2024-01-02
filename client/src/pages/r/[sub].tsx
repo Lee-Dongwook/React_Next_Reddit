@@ -96,10 +96,13 @@ const SubPage = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
-                  onClick={() => openFileInput("image")}
+                  onClick={() => openFileInput("banner")}
                 ></div>
               ) : (
-                <div className="h-20 bg-gray-400"></div>
+                <div
+                  className="h-20 bg-gray-400"
+                  onClick={() => openFileInput("banner")}
+                ></div>
               )}
             </div>
             {/* 커뮤니티 메타 데이터 */}
@@ -113,6 +116,7 @@ const SubPage = () => {
                       width={70}
                       height={70}
                       className="rounded-full"
+                      onClick={() => openFileInput("image")}
                     />
                   )}
                 </div>
