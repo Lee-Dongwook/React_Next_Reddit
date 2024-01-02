@@ -11,7 +11,7 @@ const UserPage = () => {
   const router = useRouter();
   const username = router.query.username;
 
-  const { data, error } = useSWR(username ? `/user/${username}` : null);
+  const { data, error } = useSWR(username ? `/users/${username}` : null);
   if (!data) return null;
 
   return (

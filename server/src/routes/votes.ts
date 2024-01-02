@@ -49,7 +49,7 @@ const vote = async(req: Request, res: Response) => {
             where: {
                 identifier, slug
             },
-            relations: ["comments","comment.votes","sub","votes"]
+            relations: ["comments","comments.votes","sub","votes"]
         });
 
         post.setUserVote(user);

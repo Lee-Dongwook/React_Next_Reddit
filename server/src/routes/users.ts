@@ -18,7 +18,7 @@ const getUserData = async (req: Request, res: Response) => {
 
         const comments = await Comment.find({
             where: {username: user.username},
-            relations: ["posts"]
+            relations: ["post"]
         })
 
         if(res.locals.user) {
