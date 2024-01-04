@@ -6,4 +6,5 @@ tmp/
 temp/
 
 #env
-.env
+.env.development
+.env.production
